@@ -1,5 +1,10 @@
 import { APP_INITIALIZER, ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { PreloadAllModules, provideRouter, withComponentInputBinding, withPreloading } from '@angular/router';
+import {
+  PreloadAllModules,
+  provideRouter, RouterModule,
+  withComponentInputBinding,
+  withPreloading
+} from '@angular/router';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { BrowserAnimationsModule, provideAnimations } from '@angular/platform-browser/animations';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
@@ -7,6 +12,9 @@ import { BrowserModule, provideClientHydration } from '@angular/platform-browser
 import { IconsService } from "@app/services/icons.service";
 import { APP_ROUTES } from "@app/app.routes";
 import {AngularSvgIconModule} from "angular-svg-icon";
+import {NgxsModule} from "@ngxs/store";
+import {RatesState} from "@app/store/state/converter.state";
+import {RATES_PROVIDERS} from "@app/providers/rates.providers";
 
 
 export const appConfig: ApplicationConfig = {
@@ -20,7 +28,12 @@ export const appConfig: ApplicationConfig = {
       BrowserModule,
       BrowserAnimationsModule,
       AngularSvgIconModule.forRoot(),
+      NgxsModule.forRoot(
+        [
+          RatesState
+        ]),
     ),
+    RATES_PROVIDERS,
     provideAnimations(), // required animations providers
     {
       provide: APP_INITIALIZER,

@@ -1,1 +1,5 @@
-<p>header works!</p>
+<header>
+  <ng-container *ngIf="rates$ | async as rates">
+    <p >USD: {{ rates.USD }} | EUR: {{ rates.EUR }}</p>
+  </ng-container>
+</header>

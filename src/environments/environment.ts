@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiURL: 'https://currency-conversion-and-exchange-rates.p.rapidapi.com/latest',
+  rapidAPIkey: '417b4af61dmsh6fc15709efdfd09p141b85jsn3f61f6b2947d',
+  rapidAPIHost: 'currency-conversion-and-exchange-rates.p.rapidapi.com'
 };
 
 /*

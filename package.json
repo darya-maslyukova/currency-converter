@@ -20,6 +20,8 @@
     "@angular/platform-browser": "^16.2.12",
     "@angular/platform-browser-dynamic": "^16.2.12",
     "@angular/router": "^16.2.12",
+    "@ngneat/until-destroy": "^10.0.0",
+    "@ngxs/store": "^3.8.1",
     "angular-svg-icon": "^17.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
