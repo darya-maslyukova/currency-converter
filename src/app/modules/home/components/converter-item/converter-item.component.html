@@ -1,0 +1,11 @@
+<mat-form-field appearance="outline">
+  <mat-label>Amount</mat-label>
+  <input matInput [formControl]="amountInputControl" type="number">
+</mat-form-field>
+
+<mat-form-field appearance="outline">
+  <mat-label>From</mat-label>
+  <mat-select (selectionChange)="changeCurrency($event)">
+    <mat-option *ngFor="let curr of currencies" [value]="curr" >{{curr}}</mat-option>
+  </mat-select>
+</mat-form-field>
