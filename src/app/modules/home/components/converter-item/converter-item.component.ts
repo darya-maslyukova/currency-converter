@@ -2,19 +2,20 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
-  EventEmitter, forwardRef,
+  EventEmitter,
+  forwardRef,
+  Input,
   OnInit,
-  Output, ViewChild
+  Output
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatInputModule} from "@angular/material/input";
-import {MatOptionModule} from "@angular/material/core";
-import {MatSelectModule} from "@angular/material/select";
-import {ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule} from "@angular/forms";
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {debounceTime} from "rxjs";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatOptionModule } from "@angular/material/core";
+import { MatSelectModule } from "@angular/material/select";
+import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR, ReactiveFormsModule } from "@angular/forms";
+
+import { Currency } from "@app/enums/currency.enum";
 
 @Component({
   selector: 'app-converter-item',
@@ -35,11 +36,10 @@ import {debounceTime} from "rxjs";
       useExisting: forwardRef(() => ConverterItemComponent),
       multi: true,
     }
-    ],
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-@UntilDestroy()
 export class ConverterItemComponent implements OnInit, ControlValueAccessor {
   private onChange = (_value: string) => {};
   private onTouched = () => {};
@@ -47,8 +47,19 @@ export class ConverterItemComponent implements OnInit, ControlValueAccessor {
 
   currencies = ['UAH', 'USD', 'EUR'];
   amountInputControl = new FormControl('');
+  currencySelectControl = new FormControl('');
 
+  @Input() currency: Currency;
   @Output() selectedCurrency: EventEmitter<string> = new EventEmitter<string>();
+
+  private previousValue: string | undefined;
+
+  set value(value){
+    if( value !== undefined && this.previousValue !== value){
+      this.previousValue = value;
+      this.onChange(value);
+    }
+  }
 
   constructor(
     private cdr: ChangeDetectorRef
@@ -56,20 +67,15 @@ export class ConverterItemComponent implements OnInit, ControlValueAccessor {
   }
 
   ngOnInit() {
+    this.currencySelectControl.setValue(this.currency);
   }
 
   writeValue(value: string): void {
-    console.log(value);
+    this.value = value;
+    this.amountInputControl.setValue(value);
   }
 
   registerOnChange(fn: any): void {
-    this.amountInputControl.valueChanges
-      .pipe(debounceTime(300), untilDestroyed(this))
-      .subscribe(value => {
-        console.log(value);
-        fn(value);
-        this.cdr.markForCheck();
-      });
     this.onChange = fn;
   }
 
@@ -83,7 +89,6 @@ export class ConverterItemComponent implements OnInit, ControlValueAccessor {
   }
 
   changeCurrency(event) {
-    console.log('Currency', event.value);
     this.selectedCurrency.emit(event.value);
   }
 }

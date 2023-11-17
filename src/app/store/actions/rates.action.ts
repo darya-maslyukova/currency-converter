@@ -7,3 +7,11 @@ export class LoadRates {
   constructor(public options: LoadRatesOptions) {
   }
 }
+
+
+export class ConvertCurrency {
+  static readonly type = '[convert] currency';
+
+  constructor(public options: LoadRatesOptions) {
+  }
+}

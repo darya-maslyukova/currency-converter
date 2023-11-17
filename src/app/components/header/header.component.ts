@@ -5,7 +5,7 @@ import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {RATES_LIST$, RATES_PROVIDERS} from "@app/providers/rates.providers";
 import {RouterModule} from "@angular/router";
 import {RatesResponse} from "@app/interfaces/rates-response.interface";
-import {RatesStateInterface} from "@app/interfaces/rates-state.interface";
+import {RatesConvertStateInterface} from "@app/interfaces/rates-convert-state.interface";
 import {Rates} from "@app/interfaces/rates.interface";
 
 @Component({

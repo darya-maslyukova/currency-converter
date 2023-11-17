@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiURL: 'https://currency-conversion-and-exchange-rates.p.rapidapi.com/latest',
+  apiURL: 'https://currency-conversion-and-exchange-rates.p.rapidapi.com',
   rapidAPIkey: '417b4af61dmsh6fc15709efdfd09p141b85jsn3f61f6b2947d',
   rapidAPIHost: 'currency-conversion-and-exchange-rates.p.rapidapi.com'
 };

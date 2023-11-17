@@ -1,14 +1,18 @@
-import {ChangeDetectionStrategy, Component, Inject, OnInit} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {RATES_LIST$} from "@app/providers/rates.providers";
-import {Observable} from "rxjs";
-import {Rates} from "@app/interfaces/rates.interface";
-import {ConverterComponent} from "@app/modules/home/components/converter/converter.component";
+
+import { ConverterComponent } from "@app/modules/home/components/converter/converter.component";
+import {Store} from "@ngxs/store";
+import {ConvertCurrency} from "@app/store/actions/rates.action";
+import {Currency} from "@app/enums/currency.enum";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, ConverterComponent],
+  imports: [
+    CommonModule,
+    ConverterComponent
+  ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -16,11 +20,12 @@ import {ConverterComponent} from "@app/modules/home/components/converter/convert
 export class HomeComponent  implements OnInit {
 
   constructor(
-    @Inject(RATES_LIST$) readonly rates$: Observable<Rates>
+    private store: Store
   ) {
   }
 
   ngOnInit() {
+
   }
 
 }

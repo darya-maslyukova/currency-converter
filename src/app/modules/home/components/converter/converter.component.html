@@ -3,11 +3,19 @@
   <form [formGroup]="convertForm">
     <div>
       <label>From Currency</label>
-      <app-converter-item formControlName="fromAmount" (selectedCurrency)="convert($event)"></app-converter-item>
+      <app-converter-item
+        formControlName="fromAmount"
+        [currency]="queryConvert.from"
+        (input)="fromCurrencyInput($event)"
+        (selectedCurrency)="selectedCurrencyFrom($event)"></app-converter-item>
     </div>
     <div>
       <label>To Currency</label>
-      <app-converter-item formControlName="toAmount" (selectedCurrency)="convert($event)"></app-converter-item>
+      <app-converter-item
+        formControlName="toAmount"
+        (input)="toCurrencyInput($event)"
+        [currency]="queryConvert.to"
+        (selectedCurrency)="selectedCurrencyTo($event)"></app-converter-item>
     </div>
   </form>
 
