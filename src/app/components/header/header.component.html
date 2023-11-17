@@ -1,5 +1,8 @@
-<header>
-  <ng-container *ngIf="rates$ | async as rates">
-    <p >USD: {{ rates.USD }} | EUR: {{ rates.EUR }}</p>
-  </ng-container>
+<header class="h">
+  <div class="container">
+    <a class="h__logo" routerLink="/"><h1>Test converter</h1></a>
+    <ng-container *ngIf="ratesResponse$ | async as ratesResponse">
+      <p class="h__curr">USD: <b>{{ ratesResponse.rates.USD }}</b> | EUR: <b>{{ ratesResponse.rates.EUR }}</b></p>
+    </ng-container>
+  </div>
 </header>

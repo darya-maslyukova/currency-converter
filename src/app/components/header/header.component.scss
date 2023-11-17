@@ -1,0 +1,19 @@
+.h {
+  padding: 20px 0;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  transition: background 300ms linear;
+  backdrop-filter: blur(15px);
+  background: transparentize(red, 0.9);
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__logo {
+
+  }
+}

@@ -2,13 +2,13 @@ import { InjectionToken, Provider } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Observable } from 'rxjs';
-import { filter, switchMap, take } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 import { Store } from '@ngxs/store';
 
-import {LoadRatesOptions} from "@app/interfaces/load-rates-options.interface";
-import {LoadRates} from "@app/store/actions/rates.action";
-import {RatesState} from "@app/store/state/converter.state";
-import {Rates} from "@app/interfaces/rates.interface";
+import { LoadRatesOptions } from "@app/interfaces/load-rates-options.interface";
+import { LoadRates } from "@app/store/actions/rates.action";
+import { RatesState } from "@app/store/state/converter.state";
+import { Rates } from "@app/interfaces/rates.interface";
 
 
 export const RATES_LIST$ = new InjectionToken<Observable<Rates>>(

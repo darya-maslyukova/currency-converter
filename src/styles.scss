@@ -19,3 +19,5 @@ $my-theme: mat.define-light-theme((
   density: 0,
 ));
 @include mat.all-component-themes($my-theme);
+
+@import "sass/app";

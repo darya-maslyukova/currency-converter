@@ -1,0 +1,14 @@
+.converter {
+  border: 1px solid #e0dad5;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+
+    &__label {
+      min-width: 100px;
+    }
+  }
+}

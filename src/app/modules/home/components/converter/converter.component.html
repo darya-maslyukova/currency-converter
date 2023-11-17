@@ -1,16 +1,16 @@
-<fieldset>
-  <legend>Converter</legend>
+<fieldset class="converter">
+  <legend class="converter__title"><h2>Converter</h2></legend>
   <form [formGroup]="convertForm">
-    <div>
-      <label>From Currency</label>
+    <div class="converter__item">
+      <label class="converter__item__label">From Currency</label>
       <app-converter-item
         formControlName="fromAmount"
         [currency]="queryConvert.from"
         (input)="fromCurrencyInput($event)"
         (selectedCurrency)="selectedCurrencyFrom($event)"></app-converter-item>
     </div>
-    <div>
-      <label>To Currency</label>
+    <div class="converter__item">
+      <label class="converter__item__label">To Currency</label>
       <app-converter-item
         formControlName="toAmount"
         (input)="toCurrencyInput($event)"

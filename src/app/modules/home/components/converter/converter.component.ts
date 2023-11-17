@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 
 import { Store } from "@ngxs/store";
 import { UntilDestroy, untilDestroyed } from "@ngneat/until-destroy";
@@ -31,7 +31,6 @@ import { RatesConvertStateInterface } from "@app/interfaces/rates-convert-state.
 export class ConverterComponent implements OnInit {
 
   convertForm: FormGroup;
-  Currency = Currency;
 
   currencyFrom = Currency.UAH;
   currencyTo = Currency.USD;
@@ -49,30 +48,20 @@ export class ConverterComponent implements OnInit {
   ) {
 
     this.convertForm = this.fb.group({
-      fromAmount: [null],
-      toAmount: [null],
+      fromAmount: [null, [Validators.pattern(/^[0-9]\d*$/)]],
+      toAmount: [null, [Validators.pattern(/^[0-9]\d*$/)]],
     })
   }
 
   ngOnInit() {
     this.convertForm.get('fromAmount')?.setValue(this.queryConvert.amount);
-    this.changeCurrencyState();
-  }
-
-  changeCurrencyState() {
-    this.store
-      .dispatch(new ConvertCurrency(this.queryConvert))
-      .pipe(untilDestroyed(this))
-      .subscribe((state: { converter: RatesConvertStateInterface }) => {
-        this.convertForm.get('toAmount')?.setValue(state.converter.homeConvert.result);
-        this.cdr.markForCheck();
-      });
+    this.changeCurrencyState('toAmount');
   }
 
   selectedCurrencyFrom(currencyFrom: string | Currency) {
     this.currencyFrom = currencyFrom  as Currency;
     this.queryConvert.from = currencyFrom as Currency;
-    this.changeCurrencyState();
+    this.changeCurrencyState('toAmount');
   }
 
   selectedCurrencyTo(currencyTo: string) {
@@ -83,39 +72,44 @@ export class ConverterComponent implements OnInit {
       from: currencyTo as Currency,
       to: this.currencyFrom,
     };
-
-    this.store
-      .dispatch(new ConvertCurrency(this.queryConvert))
-      .pipe(untilDestroyed(this))
-      .subscribe(result => {
-        this.convertForm.get('fromAmount')?.setValue(result.converter.homeConvert.result);
-        this.cdr.markForCheck();
-      });
+    this.changeCurrencyState('fromAmount');
   }
 
   toCurrencyInput(event) {
+    if(!event.target.validity.valid) {
+      return;
+    }
+
     this.queryConvert = {
       amount: event.target.value,
       from: this.currencyTo,
       to: this.currencyFrom,
     };
-
-    this.store
-      .dispatch(new ConvertCurrency(this.queryConvert))
-      .pipe(untilDestroyed(this))
-      .subscribe(result => {
-        this.convertForm.get('fromAmount')?.setValue(result.converter.homeConvert.result);
-        this.cdr.markForCheck();
-      });
+    this.changeCurrencyState('fromAmount');
   }
 
   fromCurrencyInput(event) {
+    if(!event.target.validity.valid) {
+      return;
+    }
+
     this.queryConvert = {
       amount: event.target.value,
       from: this.currencyFrom,
       to: this.currencyTo,
     };
-    this.changeCurrencyState();
+    this.changeCurrencyState('toAmount');
   }
+
+  changeCurrencyState(controlName) {
+    this.store
+      .dispatch(new ConvertCurrency(this.queryConvert))
+      .pipe(untilDestroyed(this))
+      .subscribe((state: { converter: RatesConvertStateInterface }) => {
+        this.convertForm.get(controlName)?.setValue(state.converter.homeConvert.result);
+        this.cdr.markForCheck();
+      });
+  }
+
 
 }
